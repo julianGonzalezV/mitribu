@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mitribu/src/bloc/login_bloc.dart';
+import 'package:mitribu/src/bloc/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key key}) : super(key: key);
@@ -15,13 +17,14 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _getLoginForm(BuildContext context) {
+    final bloc = Provider.of(context);
     final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
           SafeArea(
               child: Container(
-            height: 230.0,
+            height: 200.0,
           )),
           Container(
             width: size.width * 0.85,
@@ -45,8 +48,10 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 50.0,
                 ),
-                _emailInput(),
-                _passwordInput(),
+                _emailInput(bloc),
+                SizedBox(height: 30.0),
+                _passwordInput(bloc),
+                SizedBox(height: 30.0),
                 _loginButton(),
               ],
             ),
@@ -58,36 +63,52 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _emailInput() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          hintText: 'email@mail.com',
-          labelText: 'Email Address',
-          icon: Icon(
-            Icons.alternate_email,
-            color: Colors.deepOrangeAccent,
+  Widget _emailInput(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.emailStream,
+      builder: (context, snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              hintText: 'email@mail.com',
+              labelText: 'Email Address',
+              icon: Icon(
+                Icons.alternate_email,
+                color: Colors.deepOrangeAccent,
+              ),
+              errorText: snapshot.error,
+              counterText: snapshot.data,
+            ),
+            onChanged: (value) => bloc.changeEmail,
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Widget _passwordInput() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: 'Password',
-          icon: Icon(
-            Icons.vpn_key,
-            color: Colors.deepOrangeAccent,
+  Widget _passwordInput(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.passwordStream,
+      builder: (context, snapshot) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 25.0),
+          child: TextField(
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'Password',
+              icon: Icon(
+                Icons.vpn_key,
+                color: Colors.deepOrangeAccent,
+              ),
+              errorText: snapshot.error,
+              counterText: snapshot.data,
+            ),
+            onChanged: (value) => bloc.changePassword,
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -132,9 +153,9 @@ class LoginPage extends StatelessWidget {
       padding: EdgeInsets.only(top: 100.0),
       child: Column(
         children: <Widget>[
-          Icon(Icons.person_pin, color: Colors.white, size: 80.0),
+          Icon(Icons.account_box, color: Colors.white, size: 80.0),
           SizedBox(
-            height: 10.0,
+            height: 8.0,
             width: double.infinity,
           ),
           Text(
