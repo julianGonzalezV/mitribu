@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mitribu/src/bloc/login_bloc.dart';
 import 'package:mitribu/src/bloc/provider.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+class CreateUserPage extends StatelessWidget {
+  const CreateUserPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Text('Crear cuenta', style: TextStyle(fontSize: 20.0)),
+                Text('Ingreso', style: TextStyle(fontSize: 20.0)),
                 SizedBox(
                   height: 50.0,
                 ),
@@ -58,9 +58,8 @@ class LoginPage extends StatelessWidget {
             ),
           ),
           FlatButton(
-            child: Text('Crear una cuenta'),
-            onPressed: () =>
-                Navigator.pushReplacementNamed(context, 'createUser'),
+            child: Text('¿Ya tienes una cuenta?'),
+            onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
           ),
           SizedBox(height: 80.0),
         ],
@@ -123,7 +122,7 @@ class LoginPage extends StatelessWidget {
           return RaisedButton(
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 10.0),
-              child: Text('Ingresar'),
+              child: Text('Crear cuenta'),
             ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),

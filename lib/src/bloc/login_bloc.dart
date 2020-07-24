@@ -31,6 +31,11 @@ class LoginBloc with Validator {
       passwordStream,
       (e, p) => true); //if exists data in e & b then return true
 
+//Get last/full value from every input text
+
+  String get emailValue => _emailController.value;
+  String get passwordValue => _passwordController.value;
+
   dispose() {
     _emailController?.close();
     _passwordController?.close();
