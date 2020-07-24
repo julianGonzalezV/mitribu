@@ -1,22 +1,35 @@
 import 'dart:async';
 
 import 'package:mitribu/src/bloc/validator.dart';
+import 'package:rxdart/rxdart.dart';
 
 class LoginBloc with Validator {
   /// Broadcast for allowing multiple instances to see the changes
-  final _emailController = StreamController<String>.broadcast();
-  final _passwordController = StreamController<String>.broadcast();
+  final _emailController = BehaviorSubject<String>();
+  final _passwordController = BehaviorSubject<String>();
+
+  // reference call
+  Function(String) get changeEmail {
+    return _emailController.sink.add;
+  }
+
+  Function(String) get changePassword {
+    return _passwordController.sink.add;
+  }
 
   /// Allow to listen the every stream
-  Stream<String> get emailStream =>
-      _emailController.stream.transform(emailValidation);
+  Stream<String> get emailStream {
+    return _emailController.stream.transform(emailValidation);
+  }
 
-  Stream<String> get passwordStream =>
-      _passwordController.stream.transform(passwordValidation);
+  Stream<String> get passwordStream {
+    return _passwordController.stream.transform(passwordValidation);
+  }
 
-// reference call
-  Function(String) get changeEmail => _emailController.sink.add;
-  Function(String) get changePassword => _passwordController.sink.add;
+  Stream<bool> get formValidStream => Rx.combineLatest2(
+      emailStream,
+      passwordStream,
+      (e, p) => true); //if exists data in e & b then return true
 
   dispose() {
     _emailController?.close();

@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           _getBackground(context),
+          _getLoginForm(context),
         ],
       ),
     );
@@ -52,7 +53,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(height: 30.0),
                 _passwordInput(bloc),
                 SizedBox(height: 30.0),
-                _loginButton(),
+                _loginButton(bloc),
               ],
             ),
           ),
@@ -66,7 +67,7 @@ class LoginPage extends StatelessWidget {
   Widget _emailInput(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.emailStream,
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 25.0),
           child: TextField(
@@ -80,8 +81,9 @@ class LoginPage extends StatelessWidget {
               ),
               errorText: snapshot.error,
               counterText: snapshot.data,
+              counterStyle: TextStyle(color: Colors.amber, fontSize: 25.0),
             ),
-            onChanged: (value) => bloc.changeEmail,
+            onChanged: bloc.changeEmail,
           ),
         );
       },
@@ -91,40 +93,44 @@ class LoginPage extends StatelessWidget {
   Widget _passwordInput(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.passwordStream,
-      builder: (context, snapshot) {
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 25.0),
           child: TextField(
             obscureText: true,
             decoration: InputDecoration(
-              labelText: 'Password',
-              icon: Icon(
-                Icons.vpn_key,
-                color: Colors.deepOrangeAccent,
-              ),
-              errorText: snapshot.error,
-              counterText: snapshot.data,
-            ),
-            onChanged: (value) => bloc.changePassword,
+                labelText: 'Password',
+                icon: Icon(
+                  Icons.vpn_key,
+                  color: Colors.deepOrangeAccent,
+                ),
+                errorText: snapshot.error,
+                counterText: snapshot.data,
+                counterStyle: TextStyle(color: Colors.amber, fontSize: 25.0)),
+            onChanged: bloc.changePassword,
           ),
         );
       },
     );
   }
 
-  Widget _loginButton() {
-    return RaisedButton(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 10.0),
-        child: Text('Ingresar'),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      color: Colors.deepOrangeAccent,
-      textColor: Colors.white,
-      onPressed: () {},
-    );
+  Widget _loginButton(LoginBloc bloc) {
+    return StreamBuilder(
+        stream: bloc.formValidStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return RaisedButton(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 10.0),
+              child: Text('Ingresar'),
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            color: Colors.deepOrangeAccent,
+            textColor: Colors.white,
+            onPressed: snapshot.hasData ? () {} : null,
+          );
+        });
   }
 
   Widget _getBackground(BuildContext context) {
@@ -175,7 +181,6 @@ class LoginPage extends StatelessWidget {
         Positioned(child: geometryStyle, bottom: 100.0, right: 20.0),
         Positioned(child: geometryStyle, bottom: -50.0, left: -20.0),
         loginIcon,
-        _getLoginForm(context),
       ],
     );
   }
