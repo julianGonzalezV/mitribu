@@ -35,6 +35,9 @@ dependencies:
   # http 
   http: ^0.12.2
 
+  # preferences pkg
+  shared_preferences:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

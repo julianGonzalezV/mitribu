@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mitribu/src/bloc/login_bloc.dart';
 import 'package:mitribu/src/bloc/provider.dart';
 import 'package:mitribu/src/providers/user_provider.dart';
+import 'package:mitribu/src/util/app_message.dart';
 
 class CreateUserPage extends StatelessWidget {
   final userProvicer = new UserProvider();
@@ -137,8 +138,16 @@ class CreateUserPage extends StatelessWidget {
         });
   }
 
-  _registerOnPressed(LoginBloc bloc, BuildContext context) {
-    userProvicer.createUser(bloc.emailValue, bloc.passwordValue);
+  _registerOnPressed(LoginBloc bloc, BuildContext context) async {
+     Map<String, dynamic> info =
+        await userProvicer.createUser(bloc.emailValue, bloc.passwordValue);
+    if (info['ok']) {
+      Navigator.pushReplacementNamed(context, 'login');
+    } else {
+      print('_loginOnPressed ${info['message']}');
+      showAlert(context, info['message']);
+    }
+    
   }
 
   Widget _getBackground(BuildContext context) {

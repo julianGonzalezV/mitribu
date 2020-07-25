@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mitribu/src/bloc/login_bloc.dart';
 import 'package:mitribu/src/bloc/provider.dart';
 import 'package:mitribu/src/providers/user_provider.dart';
+import 'package:mitribu/src/util/app_message.dart';
 
 class LoginPage extends StatelessWidget {
   final userProvicer = new UserProvider();
@@ -137,21 +138,15 @@ class LoginPage extends StatelessWidget {
         });
   }
 
-  _loginOnPressed(LoginBloc bloc, BuildContext context) {
-    /*
-    los streams al ser de tipo BehaviorSubject, permite obtener su value
-    bloc.emailValue;
-    bloc.passwordValue;*/
-    // O también podemos obtenerlos en la pagina que sigue
-    //Navigator.pushNamed(context, 'home');
-
-    /// se usa pushReplacementNamed para que se reemplace la ruta y no permita dar
-    /// regresar
-    userProvicer.userLoggin(bloc.emailValue, bloc.passwordValue).then((value) {
-      if (value['ok']) {
-        Navigator.pushReplacementNamed(context, 'home');
-      }
-    });
+  _loginOnPressed(LoginBloc bloc, BuildContext context) async {
+    Map<String, dynamic> loginInfo =
+        await userProvicer.userLoggin(bloc.emailValue, bloc.passwordValue);
+    if (loginInfo['ok']) {
+      Navigator.pushReplacementNamed(context, 'home');
+    } else {
+      print('_loginOnPressed ${loginInfo['message']}');
+      showAlert(context, loginInfo['message']);
+    }
   }
 
   Widget _getBackground(BuildContext context) {
