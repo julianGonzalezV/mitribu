@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mitribu/src/bloc/login_bloc.dart';
 import 'package:mitribu/src/bloc/provider.dart';
+import 'package:mitribu/src/providers/user_provider.dart';
 
 class CreateUserPage extends StatelessWidget {
-  const CreateUserPage({Key key}) : super(key: key);
+  final userProvicer = new UserProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class CreateUserPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Text('Ingreso', style: TextStyle(fontSize: 20.0)),
+                Text('Crear cuenta', style: TextStyle(fontSize: 20.0)),
                 SizedBox(
                   height: 50.0,
                 ),
@@ -53,7 +54,7 @@ class CreateUserPage extends StatelessWidget {
                 SizedBox(height: 30.0),
                 _passwordInput(bloc),
                 SizedBox(height: 30.0),
-                _loginButton(bloc),
+                _registerButton(bloc),
               ],
             ),
           ),
@@ -115,7 +116,7 @@ class CreateUserPage extends StatelessWidget {
     );
   }
 
-  Widget _loginButton(LoginBloc bloc) {
+  Widget _registerButton(LoginBloc bloc) {
     return StreamBuilder(
         stream: bloc.formValidStream,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -129,23 +130,15 @@ class CreateUserPage extends StatelessWidget {
             ),
             color: Colors.deepOrangeAccent,
             textColor: Colors.white,
-            onPressed:
-                snapshot.hasData ? () => _loginOnPressed(bloc, context) : null,
+            onPressed: snapshot.hasData
+                ? () => _registerOnPressed(bloc, context)
+                : null,
           );
         });
   }
 
-  _loginOnPressed(LoginBloc bloc, BuildContext context) {
-    /*
-    los streams al ser de tipo BehaviorSubject, permite obtener su value
-    bloc.emailValue;
-    bloc.passwordValue;*/
-    // O también podemos obtenerlos en la pagina que sigue
-    //Navigator.pushNamed(context, 'home');
-
-    /// se usa pushReplacementNamed para que se reemplace la ruta y no permita dar
-    /// regresar
-    Navigator.pushReplacementNamed(context, 'home');
+  _registerOnPressed(LoginBloc bloc, BuildContext context) {
+    userProvicer.createUser(bloc.emailValue, bloc.passwordValue);
   }
 
   Widget _getBackground(BuildContext context) {
@@ -174,7 +167,7 @@ class CreateUserPage extends StatelessWidget {
       padding: EdgeInsets.only(top: 100.0),
       child: Column(
         children: <Widget>[
-          Icon(Icons.account_box, color: Colors.white, size: 80.0),
+          Icon(Icons.create, color: Colors.white, size: 80.0),
           SizedBox(
             height: 8.0,
             width: double.infinity,

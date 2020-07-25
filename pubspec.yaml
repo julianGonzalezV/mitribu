@@ -32,6 +32,9 @@ dependencies:
   #additional capabilities to Dart Streams and StreamControllers.
   rxdart: ^0.24.1
 
+  # http 
+  http: ^0.12.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

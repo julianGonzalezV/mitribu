@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mitribu/src/bloc/login_bloc.dart';
 import 'package:mitribu/src/bloc/provider.dart';
+import 'package:mitribu/src/providers/user_provider.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key key}) : super(key: key);
+  final userProvicer = new UserProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class LoginPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Text('Crear cuenta', style: TextStyle(fontSize: 20.0)),
+                Text('Ingreso', style: TextStyle(fontSize: 20.0)),
                 SizedBox(
                   height: 50.0,
                 ),
@@ -146,7 +147,11 @@ class LoginPage extends StatelessWidget {
 
     /// se usa pushReplacementNamed para que se reemplace la ruta y no permita dar
     /// regresar
-    Navigator.pushReplacementNamed(context, 'home');
+    userProvicer.userLoggin(bloc.emailValue, bloc.passwordValue).then((value) {
+      if (value['ok']) {
+        Navigator.pushReplacementNamed(context, 'home');
+      }
+    });
   }
 
   Widget _getBackground(BuildContext context) {
