@@ -152,7 +152,7 @@ class CreateClientState extends State<CreateClientPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
-      color: Colors.deepPurple,
+      color: Color.fromRGBO(255, 80, 80, 9.0),
       textColor: Colors.white,
       onPressed: () => _createClientOnPressed(bloc),
     );

@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         title: 'Material App',
         initialRoute: 'login',
         routes: appRoutes(),
-        theme: ThemeData(primaryColor: Colors.deepOrangeAccent),
+        theme: ThemeData(primaryColor: Color.fromRGBO(255, 80, 80, 9.0)),
       ),
     );
   }

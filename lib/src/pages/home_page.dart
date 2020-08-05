@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
           boxShadow: [
             new BoxShadow(
               color: Colors.red[300],
-              offset: new Offset(3.0, 3.0),
+              offset: new Offset(1.0, 1.0),
             )
           ],
           gradient: LinearGradient(
@@ -110,12 +110,12 @@ class HomePage extends StatelessWidget {
                 caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)))),
         child: BottomNavigationBar(items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              title: Text('Calendario'), icon: Icon(Icons.calendar_today)),
+              title: Text('notificaciones'),
+              icon: Icon(Icons.notification_important)),
           BottomNavigationBarItem(
-              title: Text('Calendario'), icon: Icon(Icons.bubble_chart)),
+              title: Text('otro'), icon: Icon(Icons.bubble_chart)),
           BottomNavigationBarItem(
-              title: Text('Calendario'),
-              icon: Icon(Icons.supervised_user_circle))
+              title: Text('otro'), icon: Icon(Icons.supervised_user_circle))
         ]));
   }
 
@@ -126,10 +126,9 @@ class HomePage extends StatelessWidget {
         height: 800.0,
         width: 700.0,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(70.0),
           gradient: LinearGradient(colors: <Color>[
             Color.fromRGBO(255, 80, 80, 9.0),
-            Color.fromRGBO(180, 70, 300, 9.0),
+            Colors.white,
           ]),
         ),
       ),
