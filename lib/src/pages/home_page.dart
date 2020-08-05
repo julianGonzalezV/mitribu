@@ -8,14 +8,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Provider.of(context);
+    //final bloc = Provider.of(context);
     return Scaffold(
-      /*body: Column(
-        children: <Widget>[
-          Text('Email ${bloc.emailValue}'),
-          Text('Password ${bloc.passwordValue} '),
-        ],
-      ),*/
       body: Scaffold(
         body: Stack(
           children: <Widget>[
@@ -41,14 +35,17 @@ class HomePage extends StatelessWidget {
       height: 180.0,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-          color: Color.fromRGBO(105, 64, 140, 0.5),
+          gradient: LinearGradient(colors: <Color>[
+            Color.fromRGBO(180, 70, 300, 9.0),
+            Colors.white,
+          ]),
           borderRadius: BorderRadius.circular(20.0)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, 'itemSummary');
+              //Navigator.pushNamed(context, 'siguientePantalla');
             },
             child: CircleAvatar(
               backgroundColor: color,
@@ -77,8 +74,15 @@ class HomePage extends StatelessWidget {
       children: <TableRow>[
         TableRow(children: [
           _bottonCategory(
-              context, 'Eventos', Icons.calendar_view_day, Colors.blue),
-          _bottonCategory(context, 'Cocina', Icons.fastfood, Colors.purple)
+              context, 'Pagar Admon', Icons.calendar_view_day, Colors.blue),
+          _bottonCategory(context, 'Reserva zona común',
+              Icons.calendar_view_day, Colors.blue),
+        ]),
+        TableRow(children: [
+          _bottonCategory(context, 'Reportar incidente',
+              Icons.calendar_view_day, Colors.blue),
+          _bottonCategory(context, 'Anuncios administración',
+              Icons.calendar_view_day, Colors.blue),
         ]),
       ],
     );
@@ -87,8 +91,7 @@ class HomePage extends StatelessWidget {
   Widget _bottomNavigationBar(BuildContext context) {
     return Theme(
         data: Theme.of(context).copyWith(
-            canvasColor: Color.fromRGBO(105, 64, 140, 8.0),
-            primaryColor: Colors.white,
+            canvasColor: Colors.white,
             textTheme: Theme.of(context).textTheme.copyWith(
                 caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)))),
         child: BottomNavigationBar(items: <BottomNavigationBarItem>[
@@ -106,27 +109,13 @@ class HomePage extends StatelessWidget {
     final boxColor1 = Transform.rotate(
       angle: -pi / 4.0,
       child: Container(
-        height: 360.0,
-        width: 360.0,
+        height: 550.0,
+        width: 480.0,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(70.0),
             gradient: LinearGradient(colors: <Color>[
               Colors.white,
-              Color.fromRGBO(105, 64, 140, 8.0),
-            ])),
-      ),
-    );
-
-    final boxColor2 = Transform.rotate(
-      angle: -pi / 4.0,
-      child: Container(
-        height: 360.0,
-        width: 360.0,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(70.0),
-            gradient: LinearGradient(colors: <Color>[
-              Colors.white,
-              Color.fromRGBO(105, 64, 140, 8.0),
+              Color.fromRGBO(180, 70, 300, 9.0),
             ])),
       ),
     );
@@ -139,16 +128,15 @@ class HomePage extends StatelessWidget {
               begin: FractionalOffset(0, 0.4),
               end: FractionalOffset(0, 0.7),
               colors: <Color>[
+            Color.fromRGBO(180, 70, 300, 9.0),
             Colors.white,
-            Color.fromRGBO(105, 64, 140, 8.0),
           ])),
     );
 
     return Stack(
       children: <Widget>[
         gradient,
-        Positioned(top: -100, right: 150, child: boxColor1),
-        Positioned(top: -100, left: 230, child: boxColor2)
+        Positioned(top: -180, right: 0, child: boxColor1),
       ],
     );
   }
@@ -161,15 +149,12 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              '¿Que hay para hacer?',
+              'Selecciona una opción:',
               style: TextStyle(
-                  color: Colors.deepPurple,
+                  color: Colors.white,
                   fontSize: 30,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10.0),
-            Text('Seleccione la categoría que desea consultar:',
-                style: TextStyle(color: Colors.deepPurple, fontSize: 20))
           ],
         ),
       ),
