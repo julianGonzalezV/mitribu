@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:mitribu/src/bloc/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
@@ -35,10 +34,19 @@ class HomePage extends StatelessWidget {
       height: 180.0,
       margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: <Color>[
-            Color.fromRGBO(180, 70, 300, 9.0),
-            Colors.white,
-          ]),
+          boxShadow: [
+            new BoxShadow(
+              color: Colors.red[300],
+              offset: new Offset(3.0, 3.0),
+            )
+          ],
+          gradient: LinearGradient(
+              begin: FractionalOffset(0, 0.2),
+              end: FractionalOffset(0, 0.4),
+              colors: <Color>[
+                Colors.white,
+                Colors.white54,
+              ]),
           borderRadius: BorderRadius.circular(20.0)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -59,7 +67,7 @@ class HomePage extends StatelessWidget {
           ),
           Text(
             text,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           SizedBox(
             height: 7.0,
@@ -74,15 +82,21 @@ class HomePage extends StatelessWidget {
       children: <TableRow>[
         TableRow(children: [
           _bottonCategory(
-              context, 'Pagar Admon', Icons.calendar_view_day, Colors.blue),
-          _bottonCategory(context, 'Reserva zona común',
-              Icons.calendar_view_day, Colors.blue),
+              context, 'Pagar Admon', Icons.monetization_on, Colors.green[300]),
+          _bottonCategory(
+              context, 'Reservas', Icons.list, Colors.deepOrangeAccent),
         ]),
         TableRow(children: [
-          _bottonCategory(context, 'Reportar incidente',
-              Icons.calendar_view_day, Colors.blue),
-          _bottonCategory(context, 'Anuncios administración',
-              Icons.calendar_view_day, Colors.blue),
+          _bottonCategory(
+              context, 'Reportar incidente', Icons.error, Colors.pink),
+          _bottonCategory(
+              context, 'Comunicados admon', Icons.radio, Colors.purple),
+        ]),
+        TableRow(children: [
+          _bottonCategory(
+              context, 'Buzón de sugerencias', Icons.error, Colors.pink),
+          _bottonCategory(
+              context, 'Visita/Encomienda', Icons.radio, Colors.purple),
         ]),
       ],
     );
@@ -107,16 +121,17 @@ class HomePage extends StatelessWidget {
 
   Widget _background() {
     final boxColor1 = Transform.rotate(
-      angle: -pi / 4.0,
+      angle: -pi / 3.0,
       child: Container(
-        height: 550.0,
-        width: 480.0,
+        height: 800.0,
+        width: 700.0,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(70.0),
-            gradient: LinearGradient(colors: <Color>[
-              Colors.white,
-              Color.fromRGBO(180, 70, 300, 9.0),
-            ])),
+          borderRadius: BorderRadius.circular(70.0),
+          gradient: LinearGradient(colors: <Color>[
+            Color.fromRGBO(255, 80, 80, 9.0),
+            Color.fromRGBO(180, 70, 300, 9.0),
+          ]),
+        ),
       ),
     );
 
@@ -125,10 +140,9 @@ class HomePage extends StatelessWidget {
       height: double.infinity,
       decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: FractionalOffset(0, 0.4),
+              begin: FractionalOffset(0.7, 0),
               end: FractionalOffset(0, 0.7),
               colors: <Color>[
-            Color.fromRGBO(180, 70, 300, 9.0),
             Colors.white,
           ])),
     );
@@ -136,7 +150,7 @@ class HomePage extends StatelessWidget {
     return Stack(
       children: <Widget>[
         gradient,
-        Positioned(top: -180, right: 0, child: boxColor1),
+        Positioned(top: -380, left: 70, child: boxColor1),
       ],
     );
   }
@@ -149,7 +163,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Selecciona una opción:',
+              '¿Qué deseas realizar?',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 30,
