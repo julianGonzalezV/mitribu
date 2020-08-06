@@ -143,6 +143,7 @@ class HomePage extends StatelessWidget {
               end: FractionalOffset(0, 0.7),
               colors: <Color>[
             Colors.white,
+            Colors.white38,
           ])),
     );
 
