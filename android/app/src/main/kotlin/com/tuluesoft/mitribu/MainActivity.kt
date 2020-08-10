@@ -1,4 +1,4 @@
-package com.example.mitribu
+package com.tuluesoft.mitribu
 
 import io.flutter.embedding.android.FlutterActivity
 
